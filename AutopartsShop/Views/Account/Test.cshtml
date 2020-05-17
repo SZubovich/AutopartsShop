@@ -1,0 +1,29 @@
+﻿@model AutopartsShop.Models.LoginModel
+
+@{
+    ViewData["Title"] = "Test";
+}
+
+<h1>Регистрация</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Register">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Email</label>
+                <input asp-for="Login" class="form-control" type="email" min="5" max="50" required/>
+                <span asp-validation-for="Login" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Пароль</label>
+                <input asp-for="Password" class="form-control" type="password" min="8" max="50" required/>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Зарегистрироваться" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
