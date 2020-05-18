@@ -17,4 +17,13 @@
     <ProjectReference Include="..\BLL\BLL.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Views\Categories\" />
+    <Folder Include="Views\Content\" />
+    <Folder Include="Views\Search\" />
+    <Folder Include="Views\Users\" />
+    <Folder Include="Views\Statistics\" />
+  </ItemGroup>
+
 </Project>
