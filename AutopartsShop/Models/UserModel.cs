@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AutopartsShop.Models
 {
-    public class UserModel
+    public class UserModel : DefaultPageModel
     {
         public int Id { get; set; }
 

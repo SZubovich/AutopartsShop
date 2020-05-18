@@ -4,18 +4,35 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using BLL.Services;
+using BLL.Models;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using AutopartsShop.Models;
+using AutopartsShop.Mapper;
 
 namespace AutopartsShop.Controllers
 {
     public class UsersController : Controller
     {
-        // GET: Users
+        [Authorize(Roles ="ADMIN")]
         public ActionResult Index()
         {
-            return View();
+            var userService = new AccountService();
+            var users = userService.GetByCondition((x) => x.Role != null);
+            UsersListModel usersListModel = new UsersListModel();
+            usersListModel.Users = new List<UserModel>();
+
+            foreach (var user in users)
+            {
+                usersListModel.Users.Add(user.ToView());
+            }
+
+            return View(usersListModel);
         }
 
-        // GET: Users/Details/5
         public ActionResult Details(int id)
         {
             return View();
@@ -88,6 +105,24 @@ namespace AutopartsShop.Controllers
             {
                 return View();
             }
+        }
+
+        private DefaultPageModel DefaultModelCreate()
+        {
+            DefaultPageModel pageModel = null;
+
+            if (!string.IsNullOrEmpty(User.Identity.Name))
+            {
+                pageModel = new DefaultPageModel();
+
+                pageModel.User = new UserModel
+                {
+                    Login = User.Identity.Name,
+                    Permissions = new PermissionModel { Admin = true }
+                };
+            }
+
+            return pageModel;
         }
     }
 }

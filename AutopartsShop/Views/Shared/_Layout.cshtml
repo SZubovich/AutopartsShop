@@ -59,6 +59,7 @@
                 else
                 {
                     <div class="col-4 d-flex justify-content-end align-items-center">
+                        <img src="~/img/user.png" height="30px" width="auto"/>
                         <a class="btn-link" asp-area="" asp-controller="Account" asp-action="Login">@Model.User.Login</a>
                         <a class="btn btn-sm btn-outline-primary" asp-area="" asp-controller="Account" asp-action="Logout">Выход</a>
                     </div>
@@ -85,7 +86,7 @@
                                 <a class="nav-link text-dark p-2 text-muted" asp-area="" asp-controller="Home" asp-action="Delivery">Управление складом</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark p-2 text-muted" asp-area="" asp-controller="Home" asp-action="Payment">Учётные записи</a>
+                                <a class="nav-link text-dark p-2 text-muted" asp-area="" asp-controller="Users" asp-action="Index">Учётные записи</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="dropdown03" aria-expanded="false" aria-haspopup="true" href="#" data-toggle="dropdown">Контент</a>
@@ -131,37 +132,37 @@
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
-                    <li class="nav-item">
+                    <li class="nav-item btn btn-outline-dark">
                         <a class="nav-link active" asp-area="" asp-controller="Account" asp-action="Test">
                             <img src="~/img/search_logo.png" height="30px" width="auto" />
                             Поиск
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item btn btn-outline-dark">
                         <a class="nav-link active" asp-area="" asp-controller="Account" asp-action="Test">
                             <img src="~/img/catalogue_logo.png" height="30px" width="auto" />
                             Общий каталог
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item btn btn-outline-dark">
                         <a class="nav-link active" asp-area="" asp-controller="Account" asp-action="Test">
                             <img src="~/img/categories_logo.png" height="30px" width="auto" />
                             Категории
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item btn btn-outline-dark">
                         <a class="nav-link active" asp-area="" asp-controller="Account" asp-action="Test">
                             <img src="~/img/carparts_brands.png" height="30px" width="auto" />
                             Автозапчасти по производителю
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item btn btn-outline-dark">
                         <a class="nav-link active" asp-area="" asp-controller="Account" asp-action="Test">
                             <img src="~/img/car_brands.png" height="30px" width="auto" />
                             Автозапчасти по марке авто
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item btn btn-outline-dark">
                         <a class="nav-link active" asp-area="" asp-controller="Account" asp-action="Test">
                             <img src="~/img/car_search.png" height="30px" width="auto" />
                             Поиск по автомобилю

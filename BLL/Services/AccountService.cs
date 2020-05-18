@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using BLL.Interfaces;
+using BLL.Models;
 using BLL.Mappers;
 using DLL.Context;
-using DLL.DTO;
 using Microsoft.EntityFrameworkCore;
 
 namespace BLL.Services
@@ -17,18 +17,18 @@ namespace BLL.Services
 
             using (ApplicationContext db = new ApplicationContext())
             {
-                if (user.RoleId == 0)
+                if (user.ToDAL().RoleId == 0)
                 {
-                    user.Role = db.Roles.First(x => x.ContentManager == false && x.Seller == false && x.Сourier == false && x.UserAdmin == false);
+                    user.ToDAL().Role = db.Roles.First(x => x.ContentManager == false && x.Seller == false && x.Сourier == false && x.UserAdmin == false);
                 }
                 else
                 {
-                    user.Role = db.Roles.First(x => x.Id == user.RoleId);
+                    user.Role = db.Roles.First(x => x.Id == user.ToDAL().RoleId).FromDAL();
                 }
 
                 user.Password = HashService.GetHashString(user.Password);
 
-                db.Users.Add(user);
+                db.Users.Add(user.ToDAL());
                 db.SaveChanges();
                 Console.WriteLine("User has been added!");
             }
@@ -39,7 +39,32 @@ namespace BLL.Services
             using (ApplicationContext db = new ApplicationContext())
             {
                 var users = db.Users.Include(x => x.Role).ToList();
-                return users;
+
+                List<User> mapperUsers = new List<User>(users.Count);
+
+                for (int i = 0; i < users.Count; i++)
+                {
+                    mapperUsers[i] = users[i].FromDAL();
+                }
+
+                return mapperUsers;
+            }
+        }
+
+        public IEnumerable<User> GetByCondition(Func<User, bool> condition)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                var users = db.Users.Include(x => x.Role).ToList();
+
+                List<User> mapperUsers = new List<User>(users.Count);
+
+                foreach (var user in users)
+                {
+                    mapperUsers.Add(user.FromDAL());
+                }
+
+                return mapperUsers.Where(condition).ToList();
             }
         }
 
@@ -52,27 +77,11 @@ namespace BLL.Services
                 if (savedUser != null)
                 {
                     savedUser.Password = user.Password;
-                    savedUser.Role = user.Role;
+                    savedUser.Role = user.Role.ToDAL();
                     db.SaveChanges();
                 }
 
                 return;
-            }
-        }
-
-        public BLL.Models.User Login (string login, string password)
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                password = HashService.GetHashString(password);
-                var user = db.Users.Include(x => x.Role).FirstOrDefault(x => x.Login == login && x.Password == password);
-
-                if (user != null)
-                {
-                    user.Password = string.Empty;
-                }
-
-                return user.FromDAL();
             }
         }
 
@@ -86,11 +95,27 @@ namespace BLL.Services
 
                 if (savedUser != null)
                 {
-                    db.Users.Remove(user);
+                    db.Users.Remove(user.ToDAL());
                     db.SaveChanges();
                 }
 
                 return;
+            }
+        }
+
+        public User Login(string login, string password)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                password = HashService.GetHashString(password);
+                var user = db.Users.Include(x => x.Role).FirstOrDefault(x => x.Login == login && x.Password == password);
+
+                if (user != null)
+                {
+                    user.Password = string.Empty;
+                }
+
+                return user.FromDAL();
             }
         }
 
@@ -111,6 +136,6 @@ namespace BLL.Services
                 var users = db.Users.FirstOrDefault(x => x.Login.ToUpper() == user.Login.ToUpper());
                 return users is null;
             }
-        }
+        }        
     }
 }

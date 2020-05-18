@@ -13,6 +13,7 @@ namespace AutopartsShop.Mapper
         {
             return user is null ? null : new UserModel
             {
+                Id = user.Id,
                 Login = user.Login,
                 Password = string.Empty,
                 Permissions = user.Role.ToView()

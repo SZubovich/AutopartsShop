@@ -76,8 +76,8 @@ namespace AutopartsShop.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Logout(LoginModel loginModel)
+        [HttpGet]
+        public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
