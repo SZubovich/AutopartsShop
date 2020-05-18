@@ -4,6 +4,7 @@ using System.Linq;
 using BLL.Services;
 using System.Threading.Tasks;
 using AutopartsShop.Models;
+using AutopartsShop.Mapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
@@ -23,7 +24,6 @@ namespace AutopartsShop.Controllers
         public IActionResult Register()
         {
             LoginModel model = new LoginModel();
-            model.Categories = new List<string> { "Test123", "jdjjjjjjjjjjjj" };
 
             return View("Test", model);
         }
@@ -36,8 +36,6 @@ namespace AutopartsShop.Controllers
             var length = result.Length;
 
             LoginModel model = new LoginModel();
-            model.Categories = new List<string> { "Test123", "jdjjjjjjjjjjjj" };
-
 
             return View("Test", model);
         }
@@ -46,31 +44,51 @@ namespace AutopartsShop.Controllers
         public IActionResult Login()
         {
             LoginModel model = new LoginModel();
-            model.Categories = new List<string> { "Test123", "jdjjjjjjjjjjjj" };
 
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(LoginModel loginModel)
+        public async Task<IActionResult> Login(LoginModel loginModel)
         {
             string result = loginModel.Login;
             var length = result.Length;
 
             LoginModel model = new LoginModel();
-            model.Categories = new List<string> { "Test123", "jdjjjjjjjjjjjj" };
-            //AccountService accountService = new AccountService();
-            //accountService.Login(loginModel.Login, loginModel.Password);
+
+            if (ModelState.IsValid)
+            {
+                AccountService accountService = new AccountService();
+                var user = accountService.Login(loginModel.Login, loginModel.Password);
+
+                if (user != null)
+                {
+                    await Authenticate(user.ToView());
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Ведённые логин и/или пароль некорректны!");
+                }
+            }
 
             return View(model);
         }
 
-        private async Task Authenticate(string userName)
+        [HttpPost]
+        public async Task<IActionResult> Logout(LoginModel loginModel)
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Account");
+        }
+
+        private async Task Authenticate(UserModel user)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, PermissionModel.GetRoleName(user.Permissions))
             };
 
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);

@@ -69,7 +69,7 @@ namespace BLL.Services
 
                 if (user != null)
                 {
-                    user.Login = user.Password = string.Empty;
+                    user.Password = string.Empty;
                 }
 
                 return user.FromDAL();

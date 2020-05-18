@@ -10,8 +10,8 @@ namespace BLL.Mappers
     {
         #region From DAL
         public static Models.User FromDAL(this DLL.DTO.User user)
-        {
-            return new Models.User
+        { 
+            return user is null ? null : new Models.User
             {
                 Login = user.Login,
                 Password = user.Password,
@@ -21,7 +21,7 @@ namespace BLL.Mappers
 
         public static Models.Role FromDAL(this DLL.DTO.Role role)
         {
-            return new Models.Role
+            return role is null ? null : new Models.Role
             {
                 Name = role.Name,
                 ContentManager = role.ContentManager,
@@ -35,7 +35,7 @@ namespace BLL.Mappers
         #region To DAL
         public static DLL.DTO.User ToDAL(this Models.User user)
         {
-            return new DLL.DTO.User
+            return user is null ? null : new DLL.DTO.User
             {
                 Login = user.Login,
                 Password = user.Password,
@@ -45,7 +45,7 @@ namespace BLL.Mappers
 
         public static DLL.DTO.Role ToDAL(this Models.Role role)
         {
-            return new DLL.DTO.Role
+            return role is null ? null : new DLL.DTO.Role
             {
                 Name = role.Name,
                 ContentManager = role.ContentManager,

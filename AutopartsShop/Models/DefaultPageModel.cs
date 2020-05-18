@@ -9,8 +9,6 @@ namespace AutopartsShop.Models
     {
         public UserModel User { get; set; }
 
-        public List<string> Categories { get; set; }
-
         public List<string> AdditionalSections { get; set; }
     }
 }
