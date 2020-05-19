@@ -30,5 +30,15 @@ namespace AutopartsShop.Mapper
                 Seller = role.Seller
             };
         }
+
+        public static BLL.Models.User ToBLL(this AutopartsShop.Models.UserModel user)
+        {
+            return user is null ? null : new User
+            {
+                Id = user.Id,
+                Login = user.Login,
+                Password = user.Password
+            };
+        }
     }
 }

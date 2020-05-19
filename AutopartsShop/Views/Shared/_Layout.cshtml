@@ -66,7 +66,7 @@
                 }
             </nav>
         </div>
-        @if (Model.User != null)
+        @if (Model.User?.Permissions != null && PermissionModel.GetRoleName(Model.User.Permissions) == "ADMIN")
         {
         <div>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">

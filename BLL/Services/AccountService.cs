@@ -19,7 +19,8 @@ namespace BLL.Services
             {
                 if (user.ToDAL().RoleId == 0)
                 {
-                    user.ToDAL().Role = db.Roles.First(x => x.ContentManager == false && x.Seller == false && x.Сourier == false && x.UserAdmin == false);
+                    var role = db.Roles.First(x => x.ContentManager == false && x.Seller == false && x.Сourier == false && x.UserAdmin == false);
+                    user.Role = role.FromDAL();
                 }
                 else
                 {

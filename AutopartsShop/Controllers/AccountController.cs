@@ -23,21 +23,25 @@ namespace AutopartsShop.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            LoginModel model = new LoginModel();
+            RegisterModel model = new RegisterModel();
 
-            return View("Test", model);
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Register(RegisterModel loginModel)
+        public async Task<IActionResult> Register(RegisterModel registerModel)
         {
-            string result = loginModel.Email;
-            var length = result.Length;
-
-            LoginModel model = new LoginModel();
-
-            return View("Test", model);
+            if (ModelState.IsValid)
+            {
+                AccountService accountService = new AccountService();
+                var user = new UserModel() { Login = registerModel.Email, Password = registerModel.Password };
+                accountService.Add(user.ToBLL());
+                user = accountService.Login(registerModel.Email, registerModel.Password).ToView();
+                await Authenticate(user);
+                return RedirectToAction("Index", "Home");
+            }
+            return View(registerModel);
         }
 
         [HttpGet]
