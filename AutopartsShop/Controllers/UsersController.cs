@@ -21,7 +21,7 @@ namespace AutopartsShop.Controllers
         public ActionResult Index()
         {
             var userService = new AccountService();
-            var users = userService.GetByCondition((x) => x.Role != null);
+            var users = userService.GetByCondition((x) => x.Role != null && x.Role.Name != "Customer");
             UsersListModel usersListModel = new UsersListModel();
             usersListModel.Users = new List<UserModel>();
 
@@ -33,41 +33,41 @@ namespace AutopartsShop.Controllers
             return View(usersListModel);
         }
 
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Users/Create
         public ActionResult Create()
         {
-            return View();
+            UserModel model = new UserModel();
+
+            return View(model);
         }
 
-        // POST: Users/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(UserModel user)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
+                AccountService accountService = new AccountService();
+                accountService.Add(user.ToBLL());
+            }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+            var userService = new AccountService();
+            var users = userService.GetByCondition((x) => x.Role != null && x.Role.Name != "Customer");
+            UsersListModel usersListModel = new UsersListModel();
+            usersListModel.Users = new List<UserModel>();
+
+            foreach (var curUser in users)
             {
-                return View();
+                usersListModel.Users.Add(curUser.ToView());
             }
+
+            return View("Index", usersListModel);
         }
 
-        // GET: Users/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)

@@ -1,0 +1,50 @@
+﻿@model AutopartsShop.Models.UserModel
+
+@{
+    ViewData["Title"] = "Создание";
+}
+
+<h1>Создать новую учётную запись</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Логин </label>
+                <input asp-for="Login" class="form-control" />
+                <span asp-validation-for="Login" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Пароль </label>
+                <input asp-for="Password" class="form-control" type="password"/>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Админ </label>
+                <input asp-for="Permissions.Admin" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Контент </label>
+                <input asp-for="Permissions.ContentManager" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Склад </label>
+                <input asp-for="Permissions.Seller" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Курьер </label>
+                <input asp-for="Permissions.Courier" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Создать" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Назад к списку</a>
+</div>
+

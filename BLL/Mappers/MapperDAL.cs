@@ -13,6 +13,7 @@ namespace BLL.Mappers
         { 
             return user is null ? null : new Models.User
             {
+                Id = user.Id,
                 Login = user.Login,
                 Password = user.Password,
                 Role = user.Role.FromDAL()
@@ -37,6 +38,7 @@ namespace BLL.Mappers
         {
             return user is null ? null : new DLL.DTO.User
             {
+                Id = user.Id,
                 Login = user.Login,
                 Password = user.Password,
                 Role = user.Role.ToDAL()

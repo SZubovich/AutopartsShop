@@ -1,13 +1,13 @@
 ﻿@model UsersListModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Учётные записи";
 }
 
-<h1>Index</h1>
+<h1>Учётные записи</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Создать новую</a>
 </p>
 <table class="table">
     <thead>
@@ -17,6 +17,18 @@
             </th>
             <th>
                 <p>Login</p>
+            </th>
+            <th>
+                <p>Админ</p>
+            </th>
+            <th>
+                <p>Контент</p>
+            </th>
+            <th>
+                <p>Склад</p>
+            </th>
+            <th>
+                <p>Курьер</p>
             </th>
             <th></th>
         </tr>
@@ -31,9 +43,55 @@
                 @Html.DisplayFor(modelItem => item.Login)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @if (item.Id == 1)
+                {
+                    @Html.DisplayFor(modelItem => item.Permissions.Admin)
+                }
+                else
+                {
+                    @Html.CheckBoxFor(modelItem => item.Permissions.Admin)
+                }
+            </td>
+            <td>
+                @if (item.Id == 1)
+                {
+                    @Html.DisplayFor(modelItem => item.Permissions.ContentManager)
+                }
+                else
+                {
+                    @Html.CheckBoxFor(modelItem => item.Permissions.ContentManager)
+                }
+            </td>
+            <td>
+                @if (item.Id == 1)
+                {
+                    @Html.DisplayFor(modelItem => item.Permissions.Seller)
+                }
+                else
+                {
+                    @Html.CheckBoxFor(modelItem => item.Permissions.Seller)
+                }
+            </td>
+            <td>
+                @if (item.Id == 1)
+                {
+                    @Html.DisplayFor(modelItem => item.Permissions.Courier)
+                }
+                else
+                {
+                    @Html.CheckBoxFor(modelItem => item.Permissions.Courier)
+                }
+            </td>
+            <td>
+                @if (item.Id != 1)
+                {
+                    @Html.ActionLink("Сохранить роли", "SaveRoles", new { id = item.Id })
+                }
+                | @Html.ActionLink("Сменить пароль", "ChangePassword", new { id = item.Id }) |
+                @if(item.Id != 1)
+                {
+                     @Html.ActionLink("Удалить", "Delete", new { id = item.Id });
+                }
             </td>
         </tr>
 }
