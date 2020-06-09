@@ -65,46 +65,43 @@ namespace AutopartsShop.Controllers
 
         public ActionResult Edit(int id)
         {
-            return View();
+            AccountService accountService = new AccountService();
+            UserModel model = accountService.GetByCondition(x => x.Id == id).FirstOrDefault().ToView();
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
-            try
-            {
-                // TODO: Add update logic here
+            AccountService accountService = new AccountService();
+            UserModel model = accountService.GetByCondition(x => x.Id == id).FirstOrDefault().ToView();
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
 
-        // GET: Users/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            AccountService accountService = new AccountService();
+            UserModel model = accountService.GetByCondition(x => x.Id == id).FirstOrDefault().ToView();
+
+            return View(model);
         }
 
-        // POST: Users/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            try
+            if (collection is null)
             {
-                // TODO: Add delete logic here
+                return View("Ошибка данных пользователя");
+            }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            AccountService accountService = new AccountService();
+            accountService.Remove(id);
+
+            return View();
         }
 
         private DefaultPageModel DefaultModelCreate()

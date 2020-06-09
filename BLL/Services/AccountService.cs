@@ -104,6 +104,22 @@ namespace BLL.Services
             }
         }
 
+        public void Remove(int id)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                var user = db.Users.FirstOrDefault(x => x.Id == id);
+
+                if (user != null)
+                {
+                    db.Users.Remove(user);
+                    db.SaveChanges();
+                }
+
+                return;
+            }
+        }
+
         public User Login(string login, string password)
         {
             using (ApplicationContext db = new ApplicationContext())

@@ -27,7 +27,7 @@ namespace DLL.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=diploma;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=(localdb1)\\mssqllocaldb;Database=diploma;Trusted_Connection=True;");
         }
     }
 }

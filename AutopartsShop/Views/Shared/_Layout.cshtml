@@ -66,7 +66,7 @@
                 }
             </nav>
         </div>
-        @if (Model.User?.Permissions != null && PermissionModel.GetRoleName(Model.User.Permissions) == "ADMIN")
+        @*@if (Model.User?.Permissions != null && PermissionModel.GetRoleName(Model.User.Permissions) == "ADMIN")*@
         {
         <div>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -132,38 +132,38 @@
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
-                    <li class="nav-item btn btn-outline-dark">
-                        <a class="nav-link active" asp-area="" asp-controller="Account" asp-action="Test">
+                    <li class="nav-item">
+                        <a class="nav-link flex-plex" asp-area="" asp-controller="Account" asp-action="Test">
                             <img src="~/img/search_logo.png" height="30px" width="auto" />
                             Поиск
                         </a>
                     </li>
-                    <li class="nav-item btn btn-outline-dark">
-                        <a class="nav-link active" asp-area="" asp-controller="Account" asp-action="Test">
+                    <li class="nav-item">
+                        <a class="nav-link flex-plex" asp-area="" asp-controller="Account" asp-action="Test">
                             <img src="~/img/catalogue_logo.png" height="30px" width="auto" />
                             Общий каталог
                         </a>
                     </li>
-                    <li class="nav-item btn btn-outline-dark">
-                        <a class="nav-link active" asp-area="" asp-controller="Account" asp-action="Test">
+                    <li class="nav-item">
+                        <a class="nav-link flex-plex" asp-area="" asp-controller="Account" asp-action="Test">
                             <img src="~/img/categories_logo.png" height="30px" width="auto" />
                             Категории
                         </a>
                     </li>
-                    <li class="nav-item btn btn-outline-dark">
-                        <a class="nav-link active" asp-area="" asp-controller="Account" asp-action="Test">
+                    <li class="nav-item">
+                        <a class="nav-link flex-plex" asp-area="" asp-controller="Account" asp-action="Test">
                             <img src="~/img/carparts_brands.png" height="30px" width="auto" />
                             Автозапчасти по производителю
                         </a>
                     </li>
-                    <li class="nav-item btn btn-outline-dark">
-                        <a class="nav-link active" asp-area="" asp-controller="Account" asp-action="Test">
+                    <li class="nav-item">
+                        <a class="nav-link flex-plex" asp-area="" asp-controller="Account" asp-action="Test">
                             <img src="~/img/car_brands.png" height="30px" width="auto" />
                             Автозапчасти по марке авто
                         </a>
                     </li>
-                    <li class="nav-item btn btn-outline-dark">
-                        <a class="nav-link active" asp-area="" asp-controller="Account" asp-action="Test">
+                    <li class="nav-item">
+                        <a class="nav-link flex-plex" asp-area="" asp-controller="Account" asp-action="Test">
                             <img src="~/img/car_search.png" height="30px" width="auto" />
                             Поиск по автомобилю
                         </a>
